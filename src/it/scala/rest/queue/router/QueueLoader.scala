@@ -1,6 +1,5 @@
 package rest.queue.router
 
-import com.here.eva.queue.connector.{QueueConnector, QueueConnectorConf}
 import com.typesafe.config.ConfigFactory
 import net.ceedubs.ficus.Ficus._
 import net.ceedubs.ficus.readers.ArbitraryTypeReader._
