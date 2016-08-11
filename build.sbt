@@ -13,7 +13,6 @@ lazy val commonSettings = Defaults.coreDefaultSettings ++ packAutoSettings ++ Se
       "com.typesafe.akka" % "akka-stream_2.11" % akkaVersion,
       "com.typesafe.akka" % "akka-http-experimental_2.11" % akkaVersion,
       "com.typesafe.akka" % "akka-slf4j_2.11" % akkaVersion,
-      "com.here.eva" % "queue-connector_2.11" % "0.1-SNAPSHOT",
       "ch.qos.logback" % "logback-classic" % "1.1.3"
     )
   },
