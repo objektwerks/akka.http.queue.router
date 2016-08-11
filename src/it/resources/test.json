@@ -1,0 +1,11 @@
+{
+  "uuid": "27bc1e27-3945-4c65-886f-38f5009f37fb",
+  "callbackUrl": "http://dchivcpdb01:8085/decide?layerName=NSRoad&hereQuadKey=19319229&version=28",
+  "ecosystem": "Bronx Level-12",
+  "changedLayers": ["Topology"],
+  "geometry": { "type": "Polygon",
+    "coordinates": [
+      [ [-73.88764, 40.85823], [-73.88686, 40.85823], [-73.88686, 40.85783], [-73.88764, 40.85783], [-73.88764, 40.85823] ]
+    ]
+  }
+}
