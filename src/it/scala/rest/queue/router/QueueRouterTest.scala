@@ -9,7 +9,7 @@ import org.scalatest.{BeforeAndAfterAll, Matchers, WordSpec}
 
 class QueueRouterTest extends WordSpec with Matchers with ScalatestRouteTest with BeforeAndAfterAll with QueueRouter {
   val config = ConfigFactory.load("test.conf")
-  val actorRefFactory = ActorSystem.create("now", config)
+  val actorRefFactory = ActorSystem.create("queue-router", config)
   val server = Http().bindAndHandle(routes, "localhost", 0)
 
   override protected def afterAll(): Unit = {
