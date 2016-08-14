@@ -9,13 +9,17 @@ import com.rabbitmq.client.Envelope
 import org.slf4j.LoggerFactory
 import spray.json.DefaultJsonProtocol
 
+import scala.collection.mutable.ArrayBuffer
+
 case class QueueRequest(body: String)
 
 case class QueueResponse(body: String)
 
+case class QueueResponses(responses: Array[QueueResponse])
+
 class QueueRouteConsumer(connector: QueueConnector) extends QueueConsumer(connector) {
   val log = LoggerFactory.getLogger(this.getClass)
-
+  val responses = new ArrayBuffer[QueueResponse]()
   override def handleDelivery(consumerTag: String,
                               envelope: Envelope,
                               properties: BasicProperties,
@@ -23,6 +27,7 @@ class QueueRouteConsumer(connector: QueueConnector) extends QueueConsumer(connec
     val message = new String(body, StandardCharsets.UTF_8)
     log.debug(s"queue route consumer handleDeliver: $message")
     connector.ackAllMessages(envelope.getDeliveryTag)
+    responses += QueueResponse(message)
   }
 }
 
@@ -33,6 +38,7 @@ class QueueRouter(requestQueue: QueueConnector, responseQueue: QueueConnector) e
   val log = LoggerFactory.getLogger(this.getClass)
   implicit val queueRequestFormat = jsonFormat1(QueueRequest)
   implicit val queueResponseFormat = jsonFormat1(QueueResponse)
+  implicit val queueResponsesFormat = jsonFormat1(QueueResponses)
 
   val queuePushRoute = path("push") {
     post {
@@ -62,5 +68,14 @@ class QueueRouter(requestQueue: QueueConnector, responseQueue: QueueConnector) e
     }
   }
 
-  val routes = queuePushRoute ~ queuePullRoute
+  val queueConsumeRoute = path("consume") {
+    get {
+      val consumer = new QueueRouteConsumer(responseQueue)
+      responseQueue.consume(prefetchCount = 10, consumer)
+      val responses = QueueResponses(consumer.responses.toArray)
+      complete(ToResponseMarshallable[QueueResponses](responses))
+    }
+  }
+
+  val routes = queuePushRoute ~ queuePullRoute ~ queueConsumeRoute
 }
