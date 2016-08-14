@@ -20,14 +20,15 @@ case class QueueResponses(responses: Array[QueueResponse])
 class QueueRouteConsumer(connector: QueueConnector) extends QueueConsumer(connector) {
   val log = LoggerFactory.getLogger(this.getClass)
   val responses = new ArrayBuffer[QueueResponse]()
+
   override def handleDelivery(consumerTag: String,
                               envelope: Envelope,
                               properties: BasicProperties,
                               body: Array[Byte]): Unit = {
     val message = new String(body, StandardCharsets.UTF_8)
+    responses += QueueResponse(message)
     log.debug(s"queue route consumer handleDeliver: $message")
     connector.ackAllMessages(envelope.getDeliveryTag)
-    responses += QueueResponse(message)
   }
 }
 
@@ -71,9 +72,10 @@ class QueueRouter(requestQueue: QueueConnector, responseQueue: QueueConnector) e
   val queueConsumeRoute = path("consume") {
     get {
       val consumer = new QueueRouteConsumer(responseQueue)
-      responseQueue.consume(prefetchCount = 10, consumer)
-      val responses = QueueResponses(consumer.responses.toArray)
-      complete(ToResponseMarshallable[QueueResponses](responses))
+      val consumed = responseQueue.consume(prefetchCount = 1, consumer)
+      log.debug(s"queue consume route: $consumed")
+      val response = QueueResponses(consumer.responses.toArray)
+      complete(ToResponseMarshallable[QueueResponses](response))
     }
   }
 

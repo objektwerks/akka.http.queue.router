@@ -68,8 +68,8 @@ class QueueConnectorTest extends FunSuite {
   }
 
   private def consumeMessagesFromRequestQueue(queue: QueueConnector, number: Int, consumer: QueueConsumer): Unit = {
-    queue.consume(number, consumer)
-    Thread.sleep(1000)
+    val consumed = queue.consume(number, consumer)
+    log.debug(s"consumed: $consumed")
     assert(queue.pull.isEmpty)
   }
 

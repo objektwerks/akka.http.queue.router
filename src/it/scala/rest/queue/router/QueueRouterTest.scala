@@ -25,7 +25,7 @@ class QueueRouterTest extends WordSpec with Matchers with ScalatestRouteTest wit
 
   "push" should {
     "push message to queue." in {
-      Post("/push", QueueRequest("body")) ~> routes ~> check {
+      Post("/push", QueueRequest("push message")) ~> routes ~> check {
         status shouldBe StatusCodes.OK
       }
     }
@@ -36,6 +36,17 @@ class QueueRouterTest extends WordSpec with Matchers with ScalatestRouteTest wit
       Get("/pull") ~> routes ~> check {
         status shouldBe StatusCodes.OK
         responseAs[QueueResponse].body.nonEmpty shouldBe true
+      }
+    }
+  }
+
+  "consume" should {
+    "consume messages from queue." in {
+      val request = QueueRequest("consume message")
+      requestQueue.push(request.body)
+      Get("/consume") ~> routes ~> check {
+        status shouldBe StatusCodes.OK
+        responseAs[QueueResponses].responses.nonEmpty shouldBe true
       }
     }
   }
