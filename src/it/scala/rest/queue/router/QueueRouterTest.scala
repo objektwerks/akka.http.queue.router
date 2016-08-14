@@ -17,12 +17,12 @@ class QueueRouterTest extends WordSpec with Matchers with ScalatestRouteTest wit
   }
 
   "QueueRouter" should {
-    "handle get and post." in {
-      Get("/now") ~> routes ~> check {
-        responseAs[Now].time.nonEmpty shouldBe true
-      }
-      Post("/now", Now()) ~> routes ~> check {
+    "handle post and get." in {
+      Post("/request", QueueRequest("body")) ~> routes ~> check {
         status shouldBe StatusCodes.OK
+      }
+      Get("/response") ~> routes ~> check {
+        responseAs[QueueResponse].body.nonEmpty shouldBe true
       }
     }
   }
