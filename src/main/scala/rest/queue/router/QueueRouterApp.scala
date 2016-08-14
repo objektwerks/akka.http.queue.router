@@ -11,9 +11,9 @@ object QueueRouterApp extends App {
   val config = ConfigFactory.load("app.conf")
   implicit val system = ActorSystem.create("queue-router", config)
   implicit val materializer = ActorMaterializer()
-  val queueConf = config.as[QueueConnectorConf]("queue")
-  val queue = new QueueConnector(queueConf)
-  val router = new QueueRouter(queue)
+  val requestQueue = new QueueConnector(config.as[QueueConnectorConf]("request-queue"))
+  val responseQueue = new QueueConnector(config.as[QueueConnectorConf]("response-queue"))
+  val router = new QueueRouter(requestQueue, responseQueue)
   import router._
   val server = Http().bindAndHandle(routes, "localhost", 0)
 }

@@ -30,7 +30,6 @@ lazy val commonSettings = Defaults.coreDefaultSettings ++ packAutoSettings ++ Se
   ),
   fork in test := true,
   packCopyDependenciesUseSymbolicLinks := false,
-  packResourceDir += (baseDirectory.value / "app.queue.router.conf" -> "bin/app.queue.router.conf"),
   packJvmOpts := Map("master-node" -> Seq("-server", "-Xss1m", "-Xms1g", "-Xmx4g"))
 )
 lazy val root = (project in file(".")).

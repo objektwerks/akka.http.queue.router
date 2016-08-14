@@ -10,13 +10,18 @@ import net.ceedubs.ficus.readers.ArbitraryTypeReader._
 import org.scalatest.{BeforeAndAfterAll, Matchers, WordSpec}
 
 class QueueRouterTest extends WordSpec with Matchers with ScalatestRouteTest with BeforeAndAfterAll {
-  val config = ConfigFactory.load("test.conf")
+  val config = ConfigFactory.load("test.akka.queue.conf")
   val actorRefFactory = ActorSystem.create("queue-router", config)
-  val queueConf = ConfigFactory.load("test.conf").as[QueueConnectorConf]("queue")
-  val queue = new QueueConnector(queueConf)
-  val router = new QueueRouter(queue)
+  val requestQueue = new QueueConnector(config.as[QueueConnectorConf]("request-queue"))
+  val responseQueue = new QueueConnector(config.as[QueueConnectorConf]("response-queue"))
+  val router = new QueueRouter(requestQueue, responseQueue)
   import router._
   val server = Http().bindAndHandle(routes, "localhost", 0)
+
+  override protected def beforeAll(): Unit = {
+    clearQueue(requestQueue)
+    clearQueue(responseQueue)
+  }
 
   override protected def afterAll(): Unit = {
     server.flatMap(_.unbind()).onComplete(_ ⇒ system.terminate())
@@ -36,6 +41,13 @@ class QueueRouterTest extends WordSpec with Matchers with ScalatestRouteTest wit
         status shouldBe StatusCodes.OK
         responseAs[QueueResponse].body.nonEmpty shouldBe true
       }
+    }
+  }
+
+  private def clearQueue(queue: QueueConnector): Unit = {
+    var queueIsEmpty = false
+    while (!queueIsEmpty) {
+      queueIsEmpty = queue.pull.isEmpty
     }
   }
 }
