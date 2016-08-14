@@ -19,7 +19,7 @@ class QueueRouter(requestQueue: QueueConnector, responseQueue: QueueConnector) e
   implicit val queueRequestFormat = jsonFormat1(QueueRequest)
   implicit val queueResponseFormat = jsonFormat1(QueueResponse)
 
-  val queueRequestRoute = path("push") {
+  val queuePushRoute = path("push") {
     post {
       entity(as[QueueRequest]) { request =>
         val isComfirmed = requestQueue.push(request.body)
@@ -29,7 +29,7 @@ class QueueRouter(requestQueue: QueueConnector, responseQueue: QueueConnector) e
     }
   }
 
-  val queueResponsetRoute = path("pull") {
+  val queuePullRoute = path("pull") {
     get {
       val optionalMessage = responseQueue.pull
       optionalMessage match {
@@ -47,5 +47,5 @@ class QueueRouter(requestQueue: QueueConnector, responseQueue: QueueConnector) e
     }
   }
 
-  val routes = queueRequestRoute ~ queueResponsetRoute
+  val routes = queuePushRoute ~ queuePullRoute
 }
