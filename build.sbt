@@ -12,6 +12,7 @@ lazy val commonSettings = Defaults.coreDefaultSettings ++ packAutoSettings ++ Se
       "com.typesafe.akka" % "akka-actor_2.11" % akkaVersion,
       "com.typesafe.akka" % "akka-stream_2.11" % akkaVersion,
       "com.typesafe.akka" % "akka-http-experimental_2.11" % akkaVersion,
+      "com.typesafe.akka" % "akka-http-spray-json-experimental_2.11" % akkaVersion,
       "com.typesafe.akka" % "akka-slf4j_2.11" % akkaVersion,
       "com.rabbitmq" % "amqp-client" % "3.6.5",
       "com.iheart" %% "ficus" % "1.2.3",
@@ -37,5 +38,8 @@ lazy val root = (project in file(".")).
   settings(commonSettings: _*).
   settings(Defaults.itSettings: _*).
   settings(
-    libraryDependencies += "org.scalatest" % "scalatest_2.11" % "2.2.6" % "it,test"
+    libraryDependencies ++= Seq(
+      "com.typesafe.akka" % "akka-http-testkit-experimental_2.11" % "2.4.2-RC3" % "it,test",
+      "org.scalatest" % "scalatest_2.11" % "2.2.6" % "it,test"
+    )
   )
