@@ -1,5 +1,6 @@
 package rest.queue.router
 
+import com.rabbitmq.client.AMQP.BasicProperties
 import com.rabbitmq.client._
 
 private[this] class Connector(val connection: Connection, val channel: Channel) {
@@ -7,8 +8,34 @@ private[this] class Connector(val connection: Connection, val channel: Channel) 
   def close(): Unit = if (connection.isOpen) connection.close()
 }
 
+class QueueConsumer(connector: QueueConnector) extends Consumer {
+  override def handleDelivery(consumerTag: String,
+                              envelope: Envelope,
+                              properties: BasicProperties,
+                              body: Array[Byte]): Unit = {
+    throw new RuntimeException("Must override handleDelivery method!")
+  }
+
+  override def handleCancel(consumerTag: String): Unit = {}
+
+  override def handleRecoverOk(consumerTag: String): Unit = {}
+
+  override def handleCancelOk(consumerTag: String): Unit = {}
+
+  override def handleShutdownSignal(consumerTag: String, signal: ShutdownSignalException): Unit = {}
+
+  override def handleConsumeOk(consumerTag: String): Unit = {}
+}
+
 class QueueConnector(conf: QueueConnectorConf) {
   private var connector = connect()
+
+  /** A prefetchCount of 0 equals unlimited message retrieval!!! */
+  def consume(prefetchCount: Int, consumer: Consumer): Unit = {
+    checkConnector()
+    connector.channel.basicQos(prefetchCount)
+    connector.channel.basicConsume(conf.queueName, conf.autoAck, consumer)
+  }
 
   def pull: Option[GetResponse] = {
     checkConnector()
@@ -24,6 +51,11 @@ class QueueConnector(conf: QueueConnectorConf) {
   def ack(deliveryTag: Long): Unit = {
     checkConnector()
     connector.channel.basicAck(deliveryTag, false)
+  }
+
+  def ackAllMessages(deliveryTag: Long): Unit = {
+    checkConnector()
+    connector.channel.basicAck(deliveryTag, true)
   }
 
   def nack(deliveryTag: Long): Unit = {
