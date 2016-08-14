@@ -1,5 +1,7 @@
 package rest.queue.router
 
+import java.nio.charset.StandardCharsets
+
 import akka.http.scaladsl.marshallers.sprayjson.SprayJsonSupport
 import akka.http.scaladsl.model.StatusCodes._
 import spray.json.DefaultJsonProtocol
@@ -8,24 +10,33 @@ case class QueueRequest(body: String)
 
 case class QueueResponse(body: String)
 
-trait QueueRouter extends DefaultJsonProtocol with SprayJsonSupport {
+class QueueRouter(queue: QueueConnector) extends DefaultJsonProtocol with SprayJsonSupport {
   import akka.http.scaladsl.server.Directives._
   import akka.http.scaladsl.marshalling._
   import akka.http.scaladsl.model.HttpResponse
   implicit val queueRequestFormat = jsonFormat1(QueueRequest)
   implicit val queueResponseFormat = jsonFormat1(QueueResponse)
 
-  val queueRequestRoute = path("request") {
+  val queueRequestRoute = path("push") {
     post {
       entity(as[QueueRequest]) { request =>
-        complete(HttpResponse(OK))
+        val isComfirmed = queue.push(request.body)
+        if (isComfirmed) complete(HttpResponse(OK)) else complete(HttpResponse(InternalServerError))
       }
     }
   }
 
-  val queueResponsetRoute = path("response") {
+  val queueResponsetRoute = path("pull") {
     get {
-      complete(ToResponseMarshallable[QueueResponse](QueueResponse("response")))
+      val option = queue.pull
+      if (option.nonEmpty) {
+        val body = new String(option.get.getBody, StandardCharsets.UTF_8)
+        val response = QueueResponse(body)
+        complete(ToResponseMarshallable[QueueResponse](response))
+      } else {
+        println("empty message")
+        complete(HttpResponse(InternalServerError))
+      }
     }
   }
 
