@@ -19,7 +19,7 @@ class TestQueueConsumer(connector: QueueConnector) extends QueueConsumer(connect
                               properties: BasicProperties,
                               body: Array[Byte]): Unit = {
     val message = new String(body, StandardCharsets.UTF_8)
-    log.debug(s"handleDeliver: $message")
+    log.debug(s"test queue consumer handleDeliver: $message")
     connector.ackAllMessages(envelope.getDeliveryTag)
   }
 }

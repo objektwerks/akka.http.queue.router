@@ -4,12 +4,27 @@ import java.nio.charset.StandardCharsets
 
 import akka.http.scaladsl.marshallers.sprayjson.SprayJsonSupport
 import akka.http.scaladsl.model.StatusCodes._
+import com.rabbitmq.client.AMQP.BasicProperties
+import com.rabbitmq.client.Envelope
 import org.slf4j.LoggerFactory
 import spray.json.DefaultJsonProtocol
 
 case class QueueRequest(body: String)
 
 case class QueueResponse(body: String)
+
+class QueueRouteConsumer(connector: QueueConnector) extends QueueConsumer(connector) {
+  val log = LoggerFactory.getLogger(this.getClass)
+
+  override def handleDelivery(consumerTag: String,
+                              envelope: Envelope,
+                              properties: BasicProperties,
+                              body: Array[Byte]): Unit = {
+    val message = new String(body, StandardCharsets.UTF_8)
+    log.debug(s"queue route consumer handleDeliver: $message")
+    connector.ackAllMessages(envelope.getDeliveryTag)
+  }
+}
 
 class QueueRouter(requestQueue: QueueConnector, responseQueue: QueueConnector) extends DefaultJsonProtocol with SprayJsonSupport {
   import akka.http.scaladsl.marshalling._
