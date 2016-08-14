@@ -13,21 +13,11 @@ import org.slf4j.LoggerFactory
 class QueueRouterTest extends WordSpec with Matchers with ScalatestRouteTest with BeforeAndAfterAll {
   val log = LoggerFactory.getLogger(this.getClass)
   val actorRefFactory = ActorSystem.create("queue-router", ConfigFactory.load("test.akka.conf"))
-  val requestQueue = new QueueConnector(ConfigFactory.load("test.queue.conf").as[QueueConnectorConf]("queue"))
-  val responseQueue = new QueueConnector(ConfigFactory.load("test.queue.conf").as[QueueConnectorConf]("queue"))
+  val requestQueue = new QueueConnector(ConfigFactory.load("test.queue.router.conf").as[QueueConnectorConf]("queue"))
+  val responseQueue = new QueueConnector(ConfigFactory.load("test.queue.router.conf").as[QueueConnectorConf]("queue"))
   val router = new QueueRouter(requestQueue, responseQueue)
   import router._
   val server = Http().bindAndHandle(routes, "localhost", 0)
-
-  override protected def beforeAll(): Unit = {
-    val queue = new QueueConnector(ConfigFactory.load("test.queue.conf").as[QueueConnectorConf]("queue"))
-    var queueIsEmpty = false
-    while (!queueIsEmpty) {
-      queueIsEmpty = queue.pull.isEmpty
-    }
-    log.debug("before all tests: test rabbitmq queue cleared!")
-    queue.close()
-  }
 
   override protected def afterAll(): Unit = {
     server.flatMap(_.unbind()).onComplete(_ ⇒ system.terminate())
