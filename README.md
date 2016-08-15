@@ -1,6 +1,6 @@
 Rest Queue Router
 --------------------------
->Rest queue router prototype
+>Rest queue router prototype.
 
 >NOTE: This prototype does not use a single queue connection nor a pool
 of queue connections. Intead, it creates a new queue connection just-in-time
