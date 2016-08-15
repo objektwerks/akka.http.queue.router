@@ -36,7 +36,7 @@ Config
 
 Run
 ---
->Run ValidatorResponseService via sbt:
+>Run QueueRouterApp via sbt:
 
 1. sbt run
 
@@ -44,18 +44,14 @@ Run
 
 1. ./target/pack/bin/queue-router-app
 
->RestQueueRouterApp loads **app.validator.response.service.conf** from the current working directory.
-
 Log
 ---
 >The app log is written to: ./log/app.queue.router.log
 
-RabbitMQ Admin
---------------
+RabbitMQ
+--------
 >See rabbitmqadmin @ https://www.rabbitmq.com/management-cli.html
 
-RabbitMQ Control
-----------------
 >See rabbitmqctl @ https://www.rabbitmq.com/man/rabbitmqctl.1.man.html
 
 >List
