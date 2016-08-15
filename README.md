@@ -7,6 +7,9 @@ RabbitMQ cluster. Read these posts for more insights:
 * http://stackoverflow.com/questions/10407760/is-there-a-performance-difference-between-pooling-connections-or-channels-in-rab
 * https://www.rabbitmq.com/blog/2011/09/24/sizing-your-rabbits/
 
+>Queues are accessed dynamically via a post request containing an id. The id is prefixed
+just-in-time to the exchange name, queue name and routing key.
+
 Install
 -------
 1. brew install RabbitMQ
