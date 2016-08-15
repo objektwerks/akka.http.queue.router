@@ -13,9 +13,7 @@ import org.slf4j.LoggerFactory
 class QueueRouterTest extends WordSpec with Matchers with ScalatestRouteTest with BeforeAndAfterAll {
   val log = LoggerFactory.getLogger(this.getClass)
   val actorRefFactory = ActorSystem.create("queue-router", ConfigFactory.load("test.akka.conf"))
-  val requestQueue = new QueueConnector(ConfigFactory.load("test.queue.router.conf").as[QueueConnectorConf]("queue"))
-  val responseQueue = new QueueConnector(ConfigFactory.load("test.queue.router.conf").as[QueueConnectorConf]("queue"))
-  val router = new QueueRouter(requestQueue, responseQueue)
+  val router = new QueueRouter(ConfigFactory.load("test.queue.router.conf").as[QueueConnectorConf]("queue"))
   import router._
   val server = Http().bindAndHandle(routes, "localhost", 0)
 
@@ -25,7 +23,7 @@ class QueueRouterTest extends WordSpec with Matchers with ScalatestRouteTest wit
 
   "push" should {
     "push message to queue." in {
-      Post("/push", QueueRequest("push message")) ~> routes ~> check {
+      Post("/push", PushToQueue(id = "test", body = "push message")) ~> routes ~> check {
         status shouldBe StatusCodes.OK
       }
     }
@@ -33,20 +31,23 @@ class QueueRouterTest extends WordSpec with Matchers with ScalatestRouteTest wit
 
   "pull" should {
     "pull message from queue" in {
-      Get("/pull") ~> routes ~> check {
+      Post("/pull", PullFromQueue(id = "test")) ~> routes ~> check {
         status shouldBe StatusCodes.OK
-        responseAs[QueueResponse].body.nonEmpty shouldBe true
+        responseAs[PulledFromQueue].body.nonEmpty shouldBe true
       }
     }
   }
 
   "consume" should {
     "consume messages from queue." in {
-      val request = QueueRequest("consume message")
-      requestQueue.push(request.body)
-      Get("/consume") ~> routes ~> check {
+      val message = "cfg message body"
+      val conf = ConfigFactory.load("test.queue.router.conf").as[QueueConnectorConf]("queue")
+      val queue = new QueueConnector(QueueConnectorConf.copy(id = "test", conf))
+      queue.push(message)
+      queue.close()
+      Post("/consume", ConsumeFromQueue(id = "test")) ~> routes ~> check {
         status shouldBe StatusCodes.OK
-        responseAs[QueueResponses].responses.nonEmpty shouldBe true
+        responseAs[ConsumedFromQueue].responses.nonEmpty shouldBe true
       }
     }
   }
