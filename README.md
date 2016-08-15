@@ -4,7 +4,7 @@ Rest Queue Router
 
 >NOTE: This prototype does not use a single queue connection nor a pool
 of queue connections. Intead, it creates a new queue connection just-in-time
-in anticipation of targeting a RabbitMQ cluster! Read this posts for more
+in anticipation of targeting a RabbitMQ cluster! Read these posts for more
 insights:
 
 * http://stackoverflow.com/questions/10407760/is-there-a-performance-difference-between-pooling-connections-or-channels-in-rab
