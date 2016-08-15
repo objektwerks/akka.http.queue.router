@@ -11,6 +11,10 @@ RabbitMQ cluster. Read these posts for more insights:
 just-in-time to a default exchange name, queue name and routing key. Then a queue connection
 is created, accessed and closed.
 
+>See this project for an Akka Streams perspective:
+
+* https://github.com/objektwerks/reactive.queue.router
+
 Install
 -------
 1. brew install RabbitMQ
