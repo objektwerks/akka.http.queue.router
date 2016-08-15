@@ -1,7 +1,5 @@
 Rest Queue Router
 --------------------------
->Rest queue router prototype.
-
 >This prototype does not use a single queue connection nor a pool of queue connections.
 Instead, it creates a new queue connection just-in-time in anticipation of targeting a
 RabbitMQ cluster. Read these posts for more insights:
