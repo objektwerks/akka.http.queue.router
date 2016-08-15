@@ -44,9 +44,10 @@ Run
 
 1. ./target/pack/bin/queue-router-app
 
-Log
----
->The app log is written to: ./log/app.queue.router.log
+Logs
+----
+1. test log: ./target/it.test.log.txt
+2. app log: ./log/app.queue.router.log
 
 RabbitMQ
 --------
