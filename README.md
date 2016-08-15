@@ -8,7 +8,8 @@ RabbitMQ cluster. Read these posts for more insights:
 * https://www.rabbitmq.com/blog/2011/09/24/sizing-your-rabbits/
 
 >Queues are accessed dynamically via a post request containing an id. The id is prefixed
-just-in-time to the exchange name, queue name and routing key.
+just-in-time to the exchange name, queue name and routing key. Then a queue connection is
+created, accessed and closed.
 
 Install
 -------
