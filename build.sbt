@@ -15,7 +15,7 @@ lazy val commonSettings = Defaults.coreDefaultSettings ++ packAutoSettings ++ Se
       "com.typesafe.akka" % "akka-http-spray-json-experimental_2.11" % akkaVersion,
       "com.typesafe.akka" % "akka-slf4j_2.11" % akkaVersion,
       "com.rabbitmq" % "amqp-client" % "3.6.5",
-      "com.iheart" %% "ficus" % "1.2.3",
+      "net.ceedubs" % "ficus_2.11" % "1.1.2",
       "ch.qos.logback" % "logback-classic" % "1.1.3"
     )
   },
