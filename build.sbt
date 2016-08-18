@@ -1,7 +1,7 @@
 lazy val commonSettings = Defaults.coreDefaultSettings ++ packAutoSettings ++ Seq(
   name := "rest-queue-router",
+  organization := "objektwerks",
   version := "0.1-SNAPSHOT",
-  organization := "com.here.eva",
   scalaVersion := "2.11.8",
   ivyScala := ivyScala.value map {
     _.copy(overrideScalaVersion = true)
