@@ -7,7 +7,7 @@ lazy val commonSettings = Defaults.coreDefaultSettings ++ packAutoSettings ++ Se
     _.copy(overrideScalaVersion = true)
   },
   libraryDependencies ++= {
-    val akkaVersion = "2.4.8"
+    val akkaVersion = "2.4.9"
     Seq(
       "com.typesafe.akka" % "akka-actor_2.11" % akkaVersion,
       "com.typesafe.akka" % "akka-stream_2.11" % akkaVersion,
@@ -39,6 +39,6 @@ lazy val root = (project in file(".")).
   settings(
     libraryDependencies ++= Seq(
       "com.typesafe.akka" % "akka-http-testkit-experimental_2.11" % "2.4.2-RC3" % "it,test",
-      "org.scalatest" % "scalatest_2.11" % "2.2.6" % "it,test"
+      "org.scalatest" % "scalatest_2.11" % "3.0.0" % "it,test"
     )
   )
