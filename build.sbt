@@ -7,7 +7,7 @@ lazy val commonSettings = Defaults.coreDefaultSettings ++ packAutoSettings ++ Se
     _.copy(overrideScalaVersion = true)
   },
   libraryDependencies ++= {
-    val akkaVersion = "2.4.9"
+    val akkaVersion = "2.4.11"
     Seq(
       "com.typesafe.akka" % "akka-actor_2.11" % akkaVersion,
       "com.typesafe.akka" % "akka-stream_2.11" % akkaVersion,
