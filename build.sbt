@@ -7,17 +7,17 @@ lazy val commonSettings = Defaults.coreDefaultSettings ++ packAutoSettings ++ Se
     _.copy(overrideScalaVersion = true)
   },
   libraryDependencies ++= {
-    val akkaVersion = "2.4.14"
-    val akkaHttpVersion = "10.0.0"
+    val akkaVersion = "2.4.16"
+    val akkaHttpVersion = "10.0.2"
     Seq(
       "com.typesafe.akka" % "akka-actor_2.12" % akkaVersion,
       "com.typesafe.akka" % "akka-stream_2.12" % akkaVersion,
       "com.typesafe.akka" % "akka-slf4j_2.12" % akkaVersion,
       "com.typesafe.akka" % "akka-http_2.12" % akkaHttpVersion,
       "com.typesafe.akka" % "akka-http-spray-json_2.12" % akkaHttpVersion,
-      "com.rabbitmq" % "amqp-client" % "4.0.0",
+      "com.rabbitmq" % "amqp-client" % "4.0.2",
       "com.iheart" % "ficus_2.12" % "1.4.0",
-      "ch.qos.logback" % "logback-classic" % "1.1.7"
+      "ch.qos.logback" % "logback-classic" % "1.1.9"
     )
   },
   scalacOptions ++= Seq(
@@ -35,9 +35,7 @@ lazy val commonSettings = Defaults.coreDefaultSettings ++ packAutoSettings ++ Se
     "-Xlint:missing-interpolator",
     "-Xlint"
   ),
-  fork in test := true,
-  packCopyDependenciesUseSymbolicLinks := false,
-  packJvmOpts := Map("master-node" -> Seq("-server", "-Xss1m", "-Xms1g", "-Xmx4g"))
+  fork in test := true
 )
 lazy val root = (project in file(".")).
   configs(IntegrationTest).
@@ -45,7 +43,7 @@ lazy val root = (project in file(".")).
   settings(Defaults.itSettings: _*).
   settings(
     libraryDependencies ++= Seq(
-      "com.typesafe.akka" % "akka-http-testkit_2.12" % "10.0.0" % "it,test",
+      "com.typesafe.akka" % "akka-http-testkit_2.12" % "10.0.2" % "it,test",
       "org.scalatest" % "scalatest_2.12" % "3.0.1" % "it,test"
     )
   )
