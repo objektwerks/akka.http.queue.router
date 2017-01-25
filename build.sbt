@@ -1,4 +1,4 @@
-lazy val commonSettings = Defaults.coreDefaultSettings ++ packAutoSettings ++ Seq(
+lazy val commonSettings = Defaults.coreDefaultSettings ++ Seq(
   name := "rest-queue-router",
   organization := "objektwerks",
   version := "0.1-SNAPSHOT",
