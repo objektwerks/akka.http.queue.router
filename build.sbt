@@ -8,7 +8,7 @@ lazy val commonSettings = Defaults.coreDefaultSettings ++ Seq(
   },
   libraryDependencies ++= {
     val akkaVersion = "2.4.16"
-    val akkaHttpVersion = "10.0.2"
+    val akkaHttpVersion = "10.0.3"
     Seq(
       "com.typesafe.akka" % "akka-actor_2.12" % akkaVersion,
       "com.typesafe.akka" % "akka-stream_2.12" % akkaVersion,
