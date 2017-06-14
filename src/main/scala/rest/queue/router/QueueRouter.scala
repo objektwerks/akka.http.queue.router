@@ -19,7 +19,7 @@ case class PulledFromQueue(id: String, body: String)
 case class ConsumeFromQueue(id: String)
 case class ConsumedFromQueue(id: String, responses: Array[String])
 
-class QueueRouteConsumer(connector: QueueConnector) extends QueueConsumer(connector) {
+class QueueRouteConsumer(connector: QueueConnector) extends QueueConsumer() {
   val log = LoggerFactory.getLogger(this.getClass)
   val responses = new ArrayBuffer[String]()
 

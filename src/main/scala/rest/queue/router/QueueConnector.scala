@@ -8,7 +8,7 @@ private[this] class Connector(val connection: Connection, val channel: Channel) 
   def close(): Unit = if (connection.isOpen) connection.close()
 }
 
-class QueueConsumer(connector: QueueConnector) extends Consumer {
+class QueueConsumer() extends Consumer {
   override def handleDelivery(consumerTag: String,
                               envelope: Envelope,
                               properties: BasicProperties,

@@ -11,7 +11,7 @@ import net.ceedubs.ficus.readers.ArbitraryTypeReader._
 import org.scalatest.FunSuite
 import org.slf4j.LoggerFactory
 
-class TestQueueConsumer(connector: QueueConnector) extends QueueConsumer(connector) {
+class TestQueueConsumer(connector: QueueConnector) extends QueueConsumer() {
   val log = LoggerFactory.getLogger(this.getClass)
 
   override def handleDelivery(consumerTag: String,
