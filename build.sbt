@@ -2,7 +2,7 @@ lazy val commonSettings = Defaults.coreDefaultSettings ++ Seq(
   name := "rest-queue-router",
   organization := "objektwerks",
   version := "0.1-SNAPSHOT",
-  scalaVersion := "2.12.3",
+  scalaVersion := "2.12.6",
   libraryDependencies ++= {
     val akkaVersion = "2.5.3"
     val akkaHttpVersion = "10.0.8"
@@ -41,6 +41,6 @@ lazy val root = (project in file(".")).
   settings(
     libraryDependencies ++= Seq(
       "com.typesafe.akka" % "akka-http-testkit_2.12" % "10.0.7" % "it,test",
-      "org.scalatest" % "scalatest_2.12" % "3.0.3" % "it,test"
+      "org.scalatest" % "scalatest_2.12" % "3.0.5" % "it,test"
     )
   )
