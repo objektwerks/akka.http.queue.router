@@ -2,16 +2,16 @@ lazy val commonSettings = Defaults.coreDefaultSettings ++ Seq(
   name := "rest-queue-router",
   organization := "objektwerks",
   version := "0.1-SNAPSHOT",
-  scalaVersion := "2.12.6",
+  scalaVersion := "2.12.8",
   libraryDependencies ++= {
-    val akkaVersion = "2.5.3"
-    val akkaHttpVersion = "10.0.8"
+    val akkaVersion = "2.5.23"
+    val akkaHttpVersion = "10.1.8"
     Seq(
-      "com.typesafe.akka" % "akka-actor_2.12" % akkaVersion,
-      "com.typesafe.akka" % "akka-stream_2.12" % akkaVersion,
-      "com.typesafe.akka" % "akka-slf4j_2.12" % akkaVersion,
-      "com.typesafe.akka" % "akka-http_2.12" % akkaHttpVersion,
-      "com.typesafe.akka" % "akka-http-spray-json_2.12" % akkaHttpVersion,
+      "com.typesafe.akka" %% "akka-actor" % akkaVersion,
+      "com.typesafe.akka" %% "akka-stream" % akkaVersion,
+      "com.typesafe.akka" %% "akka-slf4j" % akkaVersion,
+      "com.typesafe.akka" %% "akka-http" % akkaHttpVersion,
+      "com.typesafe.akka" %% "akka-http-spray-json" % akkaHttpVersion,
       "com.rabbitmq" % "amqp-client" % "4.1.1",
       "com.iheart" % "ficus_2.12" % "1.4.1",
       "ch.qos.logback" % "logback-classic" % "1.2.3"
@@ -40,7 +40,7 @@ lazy val root = (project in file(".")).
   settings(Defaults.itSettings: _*).
   settings(
     libraryDependencies ++= Seq(
-      "com.typesafe.akka" % "akka-http-testkit_2.12" % "10.0.7" % "it,test",
-      "org.scalatest" % "scalatest_2.12" % "3.0.5" % "it,test"
+      "com.typesafe.akka" %% "akka-http-testkit" % "10.1.8" % "it,test",
+      "org.scalatest" %% "scalatest" % "3.0.5" % "it,test"
     )
   )
