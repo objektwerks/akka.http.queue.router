@@ -5,7 +5,7 @@ lazy val commonSettings = Defaults.coreDefaultSettings ++ Seq(
   scalaVersion := "2.12.8",
   libraryDependencies ++= {
     val akkaVersion = "2.5.23"
-    val akkaHttpVersion = "10.1.8"
+    val akkaHttpVersion = "10.1.9"
     Seq(
       "com.typesafe.akka" %% "akka-actor" % akkaVersion,
       "com.typesafe.akka" %% "akka-stream" % akkaVersion,
@@ -40,7 +40,7 @@ lazy val root = (project in file(".")).
   settings(Defaults.itSettings: _*).
   settings(
     libraryDependencies ++= Seq(
-      "com.typesafe.akka" %% "akka-http-testkit" % "10.1.8" % "it,test",
-      "org.scalatest" %% "scalatest" % "3.0.5" % "it,test"
+      "com.typesafe.akka" %% "akka-http-testkit" % "10.1.9" % "it,test",
+      "org.scalatest" %% "scalatest" % "3.0.8" % "it,test"
     )
   )
