@@ -4,7 +4,7 @@ lazy val commonSettings = Defaults.coreDefaultSettings ++ Seq(
   version := "0.1-SNAPSHOT",
   scalaVersion := "2.12.9",
   libraryDependencies ++= {
-    val akkaVersion = "2.5.23"
+    val akkaVersion = "2.5.24"
     val akkaHttpVersion = "10.1.9"
     Seq(
       "com.typesafe.akka" %% "akka-actor" % akkaVersion,
@@ -12,8 +12,8 @@ lazy val commonSettings = Defaults.coreDefaultSettings ++ Seq(
       "com.typesafe.akka" %% "akka-slf4j" % akkaVersion,
       "com.typesafe.akka" %% "akka-http" % akkaHttpVersion,
       "com.typesafe.akka" %% "akka-http-spray-json" % akkaHttpVersion,
-      "com.rabbitmq" % "amqp-client" % "4.1.1",
-      "com.iheart" % "ficus_2.12" % "1.4.1",
+      "com.rabbitmq" % "amqp-client" % "5.7.3",
+      "com.iheart" %% "ficus" % "1.4.7",
       "ch.qos.logback" % "logback-classic" % "1.2.3"
     )
   },
@@ -31,8 +31,7 @@ lazy val commonSettings = Defaults.coreDefaultSettings ++ Seq(
     "-Xfatal-warnings",
     "-Xlint:missing-interpolator",
     "-Xlint"
-  ),
-  fork in test := true
+  )
 )
 lazy val root = (project in file(".")).
   configs(IntegrationTest).
