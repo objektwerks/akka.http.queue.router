@@ -1,9 +1,6 @@
-.bloop
-.idea
-.metals
-.vscode
-target
+.*
+!.gitignore
 project/metals.sbt
-project/project
-project/target
-.DS_Store
+project/project/
+project/target/
+target/
