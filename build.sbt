@@ -1,5 +1,5 @@
 lazy val commonSettings = Defaults.coreDefaultSettings ++ Seq(
-  name := "rest-queue-router",
+  name := "akka.http.queue.router",
   organization := "objektwerks",
   version := "0.1-SNAPSHOT",
   scalaVersion := "2.12.12",
