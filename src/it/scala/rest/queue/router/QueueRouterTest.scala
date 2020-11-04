@@ -6,8 +6,8 @@ import akka.http.scaladsl.model.StatusCodes
 import akka.http.scaladsl.testkit.ScalatestRouteTest
 
 import com.typesafe.config.ConfigFactory
-import net.ceedubs.ficus.Ficus._
 
+import net.ceedubs.ficus.Ficus._
 import net.ceedubs.ficus.readers.ArbitraryTypeReader._
 
 import org.scalatest.BeforeAndAfterAll
@@ -20,10 +20,12 @@ class QueueRouterTest extends AnyWordSpec with Matchers with ScalatestRouteTest 
   val actorRefFactory = ActorSystem.create("queue-router", ConfigFactory.load("test.akka.conf"))
   val router = new QueueRouter(ConfigFactory.load("test.queue.router.conf").as[QueueConnectorConf]("queue"))
   import router._
-  val server = Http().bindAndHandle(routes, "localhost", 0)
+  val server = Http()
+    .newServerAt("localhost", 0)
+    .bindFlow(routes)
 
   override protected def afterAll(): Unit = {
-    server.flatMap(_.unbind()).onComplete(_ ⇒ system.terminate())
+    server.flatMap(_.unbind()).onComplete(_ => system.terminate())
   }
 
   "push" should {
