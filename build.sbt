@@ -25,6 +25,6 @@ lazy val root = (project in file(".")).
   settings(
     libraryDependencies ++= Seq(
       "com.typesafe.akka" %% "akka-http-testkit" % "10.1.12" % "it,test",
-      "org.scalatest" %% "scalatest" % "3.0.8" % "it,test"
+      "org.scalatest" %% "scalatest" % "3.2.2" % "it,test"
     )
   )

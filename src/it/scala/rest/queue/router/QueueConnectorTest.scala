@@ -10,7 +10,7 @@ import com.typesafe.config.ConfigFactory
 import net.ceedubs.ficus.Ficus._
 import net.ceedubs.ficus.readers.ArbitraryTypeReader._
 
-import org.scalatest.FunSuite
+import org.scalatest.funsuite.AnyFunSuite
 import org.slf4j.LoggerFactory
 
 class TestQueueConsumer(connector: QueueConnector) extends QueueConsumer() {
@@ -26,7 +26,7 @@ class TestQueueConsumer(connector: QueueConnector) extends QueueConsumer() {
   }
 }
 
-class QueueConnectorTest extends FunSuite {
+class QueueConnectorTest extends AnyFunSuite {
   val log = LoggerFactory.getLogger(this.getClass)
 
   test("push pull") {

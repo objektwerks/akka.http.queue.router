@@ -10,10 +10,12 @@ import net.ceedubs.ficus.Ficus._
 
 import net.ceedubs.ficus.readers.ArbitraryTypeReader._
 
-import org.scalatest.{BeforeAndAfterAll, Matchers, WordSpec}
+import org.scalatest.BeforeAndAfterAll
 import org.slf4j.LoggerFactory
+import org.scalatest.matchers.should.Matchers
+import org.scalatest.wordspec.AnyWordSpec
 
-class QueueRouterTest extends WordSpec with Matchers with ScalatestRouteTest with BeforeAndAfterAll {
+class QueueRouterTest extends AnyWordSpec with Matchers with ScalatestRouteTest with BeforeAndAfterAll {
   val log = LoggerFactory.getLogger(this.getClass)
   val actorRefFactory = ActorSystem.create("queue-router", ConfigFactory.load("test.akka.conf"))
   val router = new QueueRouter(ConfigFactory.load("test.queue.router.conf").as[QueueConnectorConf]("queue"))
