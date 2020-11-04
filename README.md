@@ -11,61 +11,39 @@ RabbitMQ cluster. Read these posts for more insights:
 just-in-time to a default exchange name, queue name and routing key. Then a queue connection
 is created, accessed and closed.
 
->See this project for an Akka Streams perspective:
-
-* https://github.com/objektwerks/reactive.queue.router
-
 Install
 -------
 1. brew install RabbitMQ
 
-Start
------
+RabbmitMQ
+---------
 1. brew services start rabbitmq
-
-Stop
-----
-1. brew services stop rabbitmq
+2. brew services stop rabbitmq
 
 Test
 ----
 1. sbt clean it:test
+>**View** the RabbitMQ Web UI at: http://http://localhost:15672/  [ user: guest, password: guest ]
+
+RabbitMqCtl
+-----------
+>See https://www.rabbitmq.com/man/rabbitmqctl.1.man.html
+
+1. List Queues
+   * rabbitmqctl list_queues [ name messages_ready messages_unacknowledged ]
+2. Restart
+   * rabbitmqctl stop_app
+   * rabbitmqctl reset
+   * rabbitmqctl start_app
 
 Pack
 ----
-1. sbt clean compile it:test pack
-
-Config
-------
-> The following configuration file:
+1. sbt clean compile pack
 
 Run
 ---
->Run QueueRouterApp via sbt:
-
 1. sbt run
 
->Run QueueRouterApp via pack:
-
+Execute
+-------
 1. ./target/pack/bin/queue-router-app
-
-Logs
-----
-1. test log: ./target/it.test.log.txt
-2. app log: ./log/app.queue.router.log
-
-RabbitMQ
---------
->See rabbitmqadmin @ https://www.rabbitmq.com/management-cli.html
-
->See rabbitmqctl @ https://www.rabbitmq.com/man/rabbitmqctl.1.man.html
-
->List
-
-1. rabbitmqctl list_queues name messages_ready messages_unacknowledged
-
->Reset
-
-1. rabbitmqctl stop_app
-2. rabbitmqctl reset
-3. rabbitmqctl start_app
