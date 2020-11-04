@@ -4,9 +4,12 @@ import akka.actor.ActorSystem
 import akka.http.scaladsl.Http
 import akka.http.scaladsl.model.StatusCodes
 import akka.http.scaladsl.testkit.ScalatestRouteTest
+
 import com.typesafe.config.ConfigFactory
 import net.ceedubs.ficus.Ficus._
+
 import net.ceedubs.ficus.readers.ArbitraryTypeReader._
+
 import org.scalatest.{BeforeAndAfterAll, Matchers, WordSpec}
 import org.slf4j.LoggerFactory
 

@@ -16,22 +16,7 @@ lazy val commonSettings = Defaults.coreDefaultSettings ++ Seq(
       "com.iheart" %% "ficus" % "1.4.7",
       "ch.qos.logback" % "logback-classic" % "1.2.3"
     )
-  },
-  scalacOptions ++= Seq(
-    "-language:postfixOps",
-    "-language:reflectiveCalls",
-    "-language:implicitConversions",
-    "-language:higherKinds",
-    "-feature",
-    "-Ywarn-unused-import",
-    "-Ywarn-unused",
-    "-Ywarn-dead-code",
-    "-unchecked",
-    "-deprecation",
-    "-Xfatal-warnings",
-    "-Xlint:missing-interpolator",
-    "-Xlint"
-  )
+  }
 )
 lazy val root = (project in file(".")).
   configs(IntegrationTest).

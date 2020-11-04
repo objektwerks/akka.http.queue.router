@@ -4,8 +4,10 @@ import java.nio.charset.StandardCharsets
 
 import akka.http.scaladsl.marshallers.sprayjson.SprayJsonSupport
 import akka.http.scaladsl.model.StatusCodes._
+
 import com.rabbitmq.client.AMQP.BasicProperties
 import com.rabbitmq.client.Envelope
+
 import org.slf4j.LoggerFactory
 import spray.json.DefaultJsonProtocol
 

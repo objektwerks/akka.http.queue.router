@@ -45,7 +45,7 @@ class QueueConnector(conf: QueueConnectorConf) {
   def push(message: String): Boolean = {
     checkConnector()
     connector.channel.basicPublish(conf.exchangeName, conf.routingKey, MessageProperties.PERSISTENT_TEXT_PLAIN, message.getBytes())
-    connector.channel.waitForConfirms(conf.publishConfirmationTimeout)
+    connector.channel.waitForConfirms(conf.publishConfirmationTimeout.toLong)
   }
 
   def ack(deliveryTag: Long): Unit = {

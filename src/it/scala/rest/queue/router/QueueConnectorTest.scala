@@ -6,8 +6,10 @@ import java.util.concurrent.atomic.AtomicInteger
 import com.rabbitmq.client.AMQP.BasicProperties
 import com.rabbitmq.client.Envelope
 import com.typesafe.config.ConfigFactory
+
 import net.ceedubs.ficus.Ficus._
 import net.ceedubs.ficus.readers.ArbitraryTypeReader._
+
 import org.scalatest.FunSuite
 import org.slf4j.LoggerFactory
 
@@ -51,26 +53,29 @@ class QueueConnectorTest extends FunSuite {
   private def pushMessagesToRequestQueue(queue: QueueConnector, number: Int): Unit = {
     val counter = new AtomicInteger()
     val confirmed = new AtomicInteger()
-    for (i <- 1 to number) {
+    for (_ <- 1 to number) {
       val message = s"test.request: ${counter.incrementAndGet}"
       val isComfirmed = queue.push(message)
       if (isComfirmed) confirmed.incrementAndGet
     }
     assert(confirmed.intValue == number)
+    ()
   }
 
   private def pullMessagesFromRequestQueue(queue: QueueConnector, number: Int): Unit = {
     val pulled = new AtomicInteger()
-    for (i <- 1 to number) {
+    for (_ <- 1 to number) {
       if(queue.pull.nonEmpty) pulled.incrementAndGet
     }
     assert(pulled.intValue == number)
+    ()
   }
 
   private def consumeMessagesFromRequestQueue(queue: QueueConnector, number: Int, consumer: QueueConsumer): Unit = {
     val consumed = queue.consume(number, consumer)
     log.debug(s"consumed: $consumed")
     assert(queue.pull.isEmpty)
+    ()
   }
 
   private def clearQueue(queue: QueueConnector): Unit = {
