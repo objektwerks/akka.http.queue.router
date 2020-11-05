@@ -23,7 +23,7 @@ RabbmitMQ
 Test
 ----
 1. sbt clean it:test
->**View** the RabbitMQ Web UI at: http://http://localhost:15672/  [ user: guest, password: guest ]
+>**View** the RabbitMQ Web UI at: http://localhost:15672/  [ user: guest, password: guest ]
 
 RabbitMqCtl
 -----------
