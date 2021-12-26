@@ -1,4 +1,4 @@
-val akkaVersion = "2.6.17"
+val akkaVersion = "2.6.18"
 val akkaHttpVersion = "10.2.7"
 
 lazy val commonSettings = Defaults.coreDefaultSettings ++ Seq(
