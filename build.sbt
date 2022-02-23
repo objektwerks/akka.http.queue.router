@@ -1,5 +1,5 @@
 val akkaVersion = "2.6.18"
-val akkaHttpVersion = "10.2.7"
+val akkaHttpVersion = "10.2.8"
 
 lazy val commonSettings = Defaults.coreDefaultSettings ++ Seq(
   name := "akka.http.queue.router",
