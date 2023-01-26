@@ -1,5 +1,5 @@
-val akkaVersion = "2.7.0"
-val akkaHttpVersion = "10.4.0"
+val akkaVersion = "2.6.20" // Don't upgrade due to BSL 1.1!
+val akkaHttpVersion = "10.2.10" // Don't upgrade due to BSL 1.1!
 
 lazy val commonSettings = Defaults.coreDefaultSettings ++ Seq(
   name := "akka.http.queue.router",
