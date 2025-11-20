@@ -5,7 +5,7 @@ lazy val commonSettings = Defaults.coreDefaultSettings ++ Seq(
   name := "akka.http.queue.router",
   organization := "objektwerks",
   version := "0.1-SNAPSHOT",
-  scalaVersion := "2.13.17",
+  scalaVersion := "2.13.18",
   libraryDependencies ++= {
     Seq(
       "com.typesafe.akka" %% "akka-actor" % akkaVersion,
